@@ -103,12 +103,13 @@ export default class {
             checkboxInput.el.addEventListener('click', this.checkboxHandle.bind(this));
             importantCheck.el.addEventListener('click', this.importantHandle.bind(this));
 
-            // wrapper.el.addEventListener('mousedown', this.dragElement)
+            wrapper.el.addEventListener('click', this.taskClickHandle)
     
             
             return { checkbox: checkbox.el, important: importantCheck.el, value: inputValue, id:taskId, date: dateToPass}
     }
 
+    //not in use at the moment
     dragElement(e) {
         const elmnt = e.currentTarget;
         const width = elmnt.offsetWidth;
@@ -163,6 +164,10 @@ export default class {
           document.onmousemove = null;
         }
       }
+
+    taskClickHandle(e) {
+        console.log(e);
+    }
 
     buttonState1() {
         this.addButton.querySelector('#state1').classList.remove('hide')
