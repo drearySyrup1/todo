@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
+    <script src="main.js" defer></script>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="content">
+        <div class="sidebar">
+            <div class="top">
+                <div class="sidebar-item account-info">
+                    <div class="circle">AG</div>
+                    <div class="info">
+                        <p class="name">Aurimas Gaizauskas</p>
+                        <p class="email">gaizauskasaurima@gmail.com</p>
+                    </div>
+                </div>
+                <div class="sidebar-item search">
+                    <div class="wrap">
+                        <input type="search">
+                        <span class="mdi mdi-magnify"></span>
+                    </div>
+                </div>
+                <div data-name="my-day" class="sidebar-item link">
+                    <div class="list-left">
+                        
+                        <span class="mdi mdi-18px mdi-white-balance-sunny"></span>
+                        <span class="nav-name">My Day</span>
+                        </div>
+                        <div data-type="count" class="hide list-right">
+                            1
+                        </div>
+                </div>
+                <div data-name="important" class="sidebar-item link">
+                    <div class="list-left">
+                        
+                        <span class="mdi mdi-18px mdi-star-outline"></span>
+                        <span class="nav-name">Important</span>
+                        </div>
+                        <div data-type="count" class="hide list-right">
+                            1
+                        </div>
+                </div>
+                <div data-name="tasks" class="sidebar-item link selected">
+                    <div class="list-left">
+                        
+                        <span class="mdi mdi-18px mdi-home-outline"></span>
+                        <span class="nav-name">Tasks</span>
+                        </div>
+                        <div data-type="count" class="hide list-right">
+                            1
+                        </div>
+                </div>
+                <div data-name="completed" class="sidebar-item link">
+                    <div class="list-left">
+                        
+                        <span class="mdi mdi-18px mdi-check-circle-outline"></span>
+                        <span class="nav-name">Completed</span>
+                        </div>
+                        <div data-type="count" class="hide list-right">
+                            1
+                        </div>
+                </div>
+                <div data-name="getting-started" class="sidebar-item link">
+                    <div class="list-left">
+                                
+                        <span class="mdi mdi-18px mdi-hand-wave"></span>
+                        <span class="nav-name">Getting Started</span>
+                        </div>
+                        <div data-type="count" class="hide list-right">
+                            1
+                        </div>
+                </div>
+                <div id="custom-lists" class="">
+                    <div data-name="custom1" class="sidebar-item link">
+                        <span>
+                            <div class="list-left">
+                                <span class="mdi mdi-18px mdi-format-list-bulleted"></span>
+                                <span class="nav-name">Groceries</span>
+                            </div>
+                        </span>
+                        <div data-type="count" class="hide list-right">
+                            1
+                        </div>
+                    </div>
+                    <div data-name="custom2" class="sidebar-item link">
+                        <span>
+                            <div class="list-left">
+                                <span class="mdi mdi-18px mdi-format-list-bulleted"></span>
+                                <span class="nav-name">Custom List</span>
+                            </div>
+                        </span>
+                        <div data-type="count" class="hide list-right">
+                            1
+                        </div>
+                    </div>
+                </div>
+             </div>
+             <div class="bottom">
+                <div id="error-sidebar" class="hide error">Already exists</div>
+                <button id="add-list">
+                    <div id="sidebar-state1" class="state">
+                        <span class="mdi mdi-18px mdi-plus"></span>
+                     New List
+                    </div>
+                    <div id="sidebar-state2" class="hide state">
+                        <input placeholder="Task" type="text">
+                    </div>
+                </button> 
+             </div>
+        </div>
+        <div class="main">
+            <div class="top">
+                <div class="title">
+                    <span id="title-icon" class="mdi mdi-36px mdi-home-outline"></span>
+                    <h1 id="title">Tasks</h1>
+                </div>
+                <div class="actions">
+                    <span class="mdi mdi-24px mdi-pencil"></span>
+                    <span class="mdi mdi-24px mdi-delete"></span>
+                </div>
+            </div>
+            <div id="tasks" class="tasks">
+                <!-- <div class="task">
+                    <div class="task-wrap">
+                        <div class="taskwrapsplit">
+                            <div class="checkbox">
+                                <input type="checkbox">
+                                <div class="checksvg"></div>
+                            </div>
+                            <p>some task</p>
+                        </div>
+                        <div class="taskwrapbottom">
+                            <span class="mdi mdi-calendar"></span>
+                            <p>Today</p>
+                        </div>
+                    </div>
+                    <div class="star-check">
+                        <input id="star" type="checkbox">
+                        <label for="star">
+                            <div class="svgs">
+                                <span class="mdi mdi-18px mdi-star-outline"></span>
+                                <span class="mdi mdi-18px mdi-star"></span>
+                            </div>
+                        </label>
+                    </div>
+                </div> -->
+            </div>
+            <div class="add-task">
+                <button id="add-task">
+                    <div id="state1" class="state">
+                        <span class="mdi mdi-18px mdi-plus"></span>
+                        New Task
+                    </div>
+                    <div id="state2" class="hide state">
+                        <input  placeholder="Task" type="text">
+                        <input id="datepicker" type="date">
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

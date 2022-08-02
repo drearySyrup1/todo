@@ -1,3 +1,4 @@
-dist/
-src/
+dist/main.js
+# src/
 node_modules/
+oldsrc/
