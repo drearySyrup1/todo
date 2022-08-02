@@ -120,10 +120,11 @@
                 <div class="title">
                     <span id="title-icon" class="mdi mdi-36px mdi-home-outline"></span>
                     <h1 id="title">Tasks</h1>
+                    <input id="topbar-edit-input" class="hide" value="Tasks" type="text">
                 </div>
                 <div class="actions">
-                    <span class="mdi mdi-24px mdi-pencil"></span>
-                    <span class="mdi mdi-24px mdi-delete"></span>
+                    <span id="actions-edit" class="mdi mdi-24px mdi-pencil"></span>
+                    <span id="actions-delete" class="mdi mdi-24px mdi-delete"></span>
                 </div>
             </div>
             <div id="tasks" class="tasks">
@@ -139,6 +140,7 @@
                         <div class="taskwrapbottom">
                             <span class="mdi mdi-calendar"></span>
                             <p>Today</p>
+                            <span class="hide mdi mdi-note"></span>
                         </div>
                     </div>
                     <div class="star-check">
@@ -166,8 +168,8 @@
             </div>
         </div>
     </div>
-    <div class="hide edit-window">
-        <div class="close-button"></div>
+    <div id="edit-window" class="hide edit-window">
+        <div id="edit-window-close-button" class="close-button"></div>
         <label for="edit-window-task">Task</label>
         <div class="task-name-wrap">
             <input id="edit-window-task" type="text">
@@ -190,10 +192,13 @@
 
         <label for="edit-window-category">Category</label>
         <select name="" id="edit-window-category">
-            <option value="">asdasd</option>
+
         </select>
 
-        <button id="edit-window-delete-button">Delete</button>
+        <button id="edit-window-delete-button">
+            <span class="mdi mdi-18px mdi-delete"></span>
+        </button>
+        <button id="edit-window-done-button">Done</button>
     </div>
 </body>
 </html>
