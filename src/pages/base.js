@@ -1,21 +1,73 @@
 import Element from '../element.js';
 import { format } from 'date-fns'
 import datescount from '../datescount'
-import sidebar from './sidebar.js';
+import editWindow from '../edit-window'
 
 export default class {
     title = document.getElementById('title');
     icon = document.getElementById('title-icon');
     tasks = document.getElementById('tasks');
     addButton = document.getElementById('add-task');
+    editButton = document.getElementById('actions-edit');
+    deleteButton = document.getElementById('actions-delete');
     state2 = false;
     generateId = this.idGenerator();
     generateTaskId = this.idGenerator();
     datepicker = document.getElementById('datepicker');
     input = this.addButton.querySelector('#state2 input');
+    editInput = document.getElementById('topbar-edit-input');
 
-    constructor(db) {
+    constructor(db, listDb) {
         this.db = db;
+        this.listDb = listDb;
+        this.editButton.addEventListener('click', this.editHandle.bind(this))
+    }
+
+    editHandle() {
+        this.title.classList.add('hide');
+        this.editInput.classList.remove('hide')
+        this.editInput.value = this.title.innerText;
+        this.editInput.focus();
+
+        this.editInput.addEventListener('keydown', e => {
+            if (e.code === 'Enter' && this.editInput.value !== '') {
+                //here change name 
+                this.listDb.database = this.listDb.getData();
+
+                this.db.database = this.db.getData();
+
+                const tasksToUpdateTitles = this.db.database.filter(item => item.category === this.title.innerText);
+                console.log(tasksToUpdateTitles)
+                tasksToUpdateTitles.forEach(item => item.category = this.editInput.value);
+                this.db.update();
+
+
+                const title = this.listDb.database.filter(item => item.name === this.title.innerText)[0];
+                title.name = this.editInput.value;
+                this.listDb.update();
+                this.sidebar.renderLists();
+                this.title.innerText = this.editInput.value;
+                this.sidebar.showCount();
+                this.stopEdit();
+
+            }
+            if (e.code === 'Escape') this.stopEdit();
+        })
+    }
+
+    stopEdit() {
+        this.title.classList.remove('hide');
+        this.editInput.classList.add('hide')
+    }
+
+    hideActions() {
+        this.editButton.classList.add('hide');
+        this.deleteButton.classList.add('hide')
+    }
+
+    showActions() {
+        this.editButton.classList.remove('hide');
+        this.deleteButton.classList.remove('hide')
     }
 
     changeTitle(newTitle, newIcon) {
@@ -67,6 +119,7 @@ export default class {
         const taskWrapBottom = new Element('div',['taskwrapbottom'],'', taskWrap.el);
             let dateIcon = new Element('span',['mdi', 'mdi-calendar'],'', taskWrapBottom.el);
             let dateElement = new Element('p',[],date, taskWrapBottom.el);
+            let noteIcon = new Element('span',['hide','mdi', 'mdi-note'],'', taskWrapBottom.el);
             if (date ==='Yesterday') {
                 dateElement.el.style.color = 'hsl(0, 90%,70%)';    
             }
@@ -103,10 +156,10 @@ export default class {
             checkboxInput.el.addEventListener('click', this.checkboxHandle.bind(this));
             importantCheck.el.addEventListener('click', this.importantHandle.bind(this));
 
-            wrapper.el.addEventListener('click', this.taskClickHandle)
+            wrapper.el.addEventListener('click', this.taskClickHandle.bind(this));
     
             
-            return { checkbox: checkbox.el, important: importantCheck.el, value: inputValue, id:taskId, date: dateToPass}
+            return { ref: wrapper, checkbox: checkbox.el, important: importantCheck.el, value: inputValue, id:taskId, date: dateToPass}
     }
 
     //not in use at the moment
@@ -166,7 +219,8 @@ export default class {
       }
 
     taskClickHandle(e) {
-        console.log(e);
+        editWindow.init({sidebar: this.sidebar, base: this})
+        editWindow.showWindow(e)
     }
 
     buttonState1() {
@@ -195,6 +249,8 @@ export default class {
         this.datepicker.value = todayDate;
         this.addButton.querySelector('#state2 input').focus()
         this.state2 = true;
+        // if (this.sidebar.currentwidnow === 'my-day') this.hideDatePicker(true);
+        console.log(this.state2);
     }
     
     removeTask(taskid) {

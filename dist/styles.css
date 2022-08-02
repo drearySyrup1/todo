@@ -221,6 +221,18 @@ input[type="search" i]::-webkit-search-cancel-button {
     flex: 1;
 }
 
+
+#topbar-edit-input {
+    background-color: transparent;
+    width: 30%;
+    border: 0;
+    outline: 0;
+    border-bottom: 2px solid hsl(0, 0%, 25%);
+    font-size: 2em;
+    font-weight: 500;
+    color: white;
+}
+
 .main .top .title h1 {
     font-weight: 500;
 }
@@ -246,7 +258,7 @@ input[type="search" i]::-webkit-search-cancel-button {
     background-color: hsl(0, 0%, 25%);
 }
 
-.mdi-delete:hover {
+.actions .mdi-delete:hover {
     color: hsl(0, 50%, 60%);
 }
 
@@ -407,6 +419,7 @@ input[type="search" i]::-webkit-search-cancel-button {
     z-index: 10000;
     grid-template-columns: max-content 1fr;
     align-items: center;
+    grid-auto-rows: max-content;
     backdrop-filter: blur(5px);
 }
 
@@ -442,7 +455,10 @@ input[type="search" i]::-webkit-search-cancel-button {
 }
 
 .edit-window input:hover,
-.edit-window select:hover {
+.edit-window select:hover,
+.edit-window button:hover,
+.edit-window textarea:hover,
+.edit-window .task-name-wrap:hover {
     border-color: hsl(0, 0%, 60%);
 }
 
@@ -477,13 +493,25 @@ input[type="search" i]::-webkit-search-cancel-button {
 }
 
 .edit-window button {
-    grid-column: 1 / -1;
     cursor: pointer;
+    height: 100%;
+}
+
+.edit-window > button:hover > span {
+    color: hsl(0, 50%, 50%);
 }
 
 .edit-window button:hover {
-    background-color: hsla(0,0%,100%,.5);
-    color: black;
+    background-color: hsla(0,0%,0%,.3);
+}
+
+.taskwrapbottom .mdi-note,
+.taskwrapbottom .mdi-calendar {
+    margin-top: 1px;
+}
+
+.taskwrapbottom .mdi-note {
+    margin-left: 20px;
 }
 
 ::-webkit-scrollbar {

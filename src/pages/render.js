@@ -1,7 +1,20 @@
 import datecount from '../datescount';
 
 export function render(base, db, category='tasks') {
-    const database = db.database
+    const database = db.getData();
+
+    if (category === 'my-day' ||
+        category === 'important' ||
+        category === 'tasks' ||
+        category === 'completed' ||
+        category === 'getting-started') {
+            base.hideActions();
+        } else {
+            base.showActions();
+        }
+
+    base.clear();
+
     base.addButton.classList.remove('hide')
     
     database.forEach(item => {
@@ -14,7 +27,9 @@ export function render(base, db, category='tasks') {
             if (category === 'important' && (!item.important || item.done)) return;
             if (category === 'completed' && item.done === false) return;
             if (item.category === category && item.done) return;
-            base.createTaskElement(item.todo,item.done,item.important, true, item.id,dateString)
+            
+            const {ref} = base.createTaskElement(item.todo,item.done,item.important, true, item.id,dateString)
+            if (item.note !== '') ref.el.querySelector('span.mdi-note').classList.remove('hide');
         }
     })
     // database.forEach(item => {
@@ -33,17 +48,18 @@ export function render(base, db, category='tasks') {
 
 
 export function getCount(db, category) {
+    const dbase = db.getData();
     if (category === 'tasks') {
-        return db.database.filter(item => item.done !== true).length
+        return dbase.filter(item => item.done !== true).length
     }
     if (category === 'my-day') {
-        return db.database.filter(item => (datecount(item.date) === 'Today' && item.done === false)).length;
+        return dbase.filter(item => (datecount(item.date) === 'Today' && item.done === false)).length;
     }
     if (category === 'completed') {
-        return db.database.filter(item => item.done === true).length;
+        return dbase.filter(item => item.done === true).length;
     }
     if (category === 'important') {
-        return db.database.filter(item => item.important === true && item.done === false).length;
+        return dbase.filter(item => item.important === true && item.done === false).length;
     }
-    return db.database.filter(item => item.category === category && item.done === false).length;
+    return dbase.filter(item => item.category === category && item.done === false).length;
 }

@@ -7,7 +7,7 @@ import {render} from './pages/render';
 
 const db  = new Db('todos');
 const listDb = new Db('lists')
-const base = new Base(db);
+const base = new Base(db, listDb);
 const sidebar = new Sidebar(base, listDb, db);
 base.sidebar = sidebar;
 render(base, db);
@@ -26,6 +26,7 @@ window.addEventListener('keydown', e => {
 
         const todo = new Item(value,false, important,addListeners.id,addListeners.date,sidebar.currentwidnow);
         base.buttonState1();
+        db.database = db.getData();
         db.database.push(todo);
         db.update();
         sidebar.showCount();

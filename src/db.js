@@ -6,10 +6,12 @@ export default class {
     }
 
     update() {
+        console.log('pushing')
         localStorage.setItem(this.dbName, JSON.stringify(this.database))
     }
 
     getData() {
+        console.log('getting data')
         return JSON.parse(localStorage.getItem(this.dbName)) || [];
     }
 

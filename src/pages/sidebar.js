@@ -72,6 +72,8 @@ export default class {
     }
 
     renderLists() {
+        this.customLists.innerHTML = '';
+        this.db.database = this.db.getData();
         this.db.database.forEach(item => {
             this.createCustomListElement({name: item.name})
         })
@@ -128,12 +130,13 @@ export default class {
     }
 
     clickHandler(e) { 
+        this.base.buttonState1();
+        this.base.stopEdit();
         this.selectAnimation(e.currentTarget)
 
         const newTitle = e.currentTarget.querySelector('.nav-name').innerText;
         this.base.changeTitle(newTitle, this.getIcon())
 
-        this.base.clear();
         render(this.base, this.base.db, e.currentTarget.dataset.name);
 
         if (this.base.state2 && this.currentwidnow === 'my-day') {
@@ -143,6 +146,9 @@ export default class {
         }
 
         if (this.currentwidnow === 'completed') {
+            this.base.addButton.classList.add('hide')
+        }
+        if (this.currentwidnow === 'getting-started') {
             this.base.addButton.classList.add('hide')
         }
         // switch () {
