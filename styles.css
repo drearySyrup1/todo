@@ -263,7 +263,7 @@ input[type="search" i]::-webkit-search-cancel-button {
 
 .task {
     display: flex;
-    cursor: move;
+    cursor: pointer;
     background-color: hsla(0, 0%, 15%, .7);
     padding: .8rem;;
     border-radius: 5px;
@@ -384,12 +384,106 @@ input[type="search" i]::-webkit-search-cancel-button {
     color: white;
 }
 
-.hide {
-    display: none;
-}
 
 .add-task button:hover {
     background-color: hsla(0, 0%, 15%, .7);
+}
+
+
+.edit-window {
+    background-color: hsla(0, 0%, 15%, .6);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: fit-content;
+    height: fit-content;
+    padding: 6rem;
+    border-radius: 10px;
+    margin: auto;
+    position: fixed;
+    display: grid;
+    gap: 10px;
+    z-index: 10000;
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.edit-window input,
+.edit-window select,
+.edit-window textarea,
+.edit-window button,
+.task-name-wrap {
+    padding: .5rem 1rem;
+    outline: none;
+    background-color: transparent;
+    border-radius: 4px;
+    color: hsl(0, 0%,85%);
+    border:1px solid hsl(0, 0%, 30%);
+    transition: background-color .15s,
+                border-color .15s;
+    resize: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+.task-name-wrap {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    padding-right: .5rem;
+}
+
+.task-name-wrap input {
+    border: 0;
+    /* padding: 0;
+    padding-right: .5rem; */
+    background-color: transparent;
+}
+
+.edit-window input:hover,
+.edit-window select:hover {
+    border-color: hsl(0, 0%, 60%);
+}
+
+.edit-window input:focus,
+.edit-window select:focus {
+    border-color: hsl(0, 0%, 60%);
+}
+
+.edit-window label {
+    color: hsl(0, 0%,85%);
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    justify-self: end;
+    font-size: .9rem;
+}
+
+.close-button {
+    position: absolute;
+    width: 15px;
+    top: 10px;
+    right: 10px;
+    aspect-ratio: 1 / 1;
+    cursor: pointer;
+    background-color: hsl(0, 0%, 100%);;
+    -webkit-mask-image: url(./img/circle-xmark-solid.svg);
+    mask-image: url(./img/circle-xmark-solid.svg);
+    transition: background-color .15s;
+}
+
+.close-button:hover {
+    background-color: hsl(0, 0%, 60%);
+}
+
+.edit-window button {
+    grid-column: 1 / -1;
+    cursor: pointer;
+}
+
+.edit-window button:hover {
+    background-color: hsla(0,0%,100%,.5);
+    color: black;
 }
 
 ::-webkit-scrollbar {
@@ -404,6 +498,10 @@ input[type="search" i]::-webkit-search-cancel-button {
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: hsla(0,0%,100%,.5)
+}
+
+.hide {
+    display: none;
 }
 
 
