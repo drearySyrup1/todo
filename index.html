@@ -168,7 +168,7 @@
             </div>
         </div>
     </div>
-    <div id="edit-window" class="hide edit-window">
+    <div id="edit-window" class="hide edit-window edit-window_base">
         <div id="edit-window-close-button" class="close-button"></div>
         <label for="edit-window-task">Task</label>
         <div class="task-name-wrap">
@@ -183,7 +183,6 @@
                 </label>
             </div>
         </div>
-
         <label for="edit-window-note">Note</label>
         <textarea name="" id="edit-window-note" rows="3"></textarea>
         
@@ -195,10 +194,19 @@
 
         </select>
 
-        <button id="edit-window-delete-button">
+        <button id="edit-window-delete-button" class="sexy-button">
             <span class="mdi mdi-18px mdi-delete"></span>
         </button>
-        <button id="edit-window-done-button">Done</button>
+        <button id="edit-window-done-button" class="sexy-button">Done</button>
+    </div>
+    
+    <div id="delete-warning-window" class="hide delete-window-wrap">
+        <div class="delete-warning-window edit-window_base">
+            <p>List contains some tasks if you delete it you'll lose them</p>
+            <p>Do you want to continue?</p>
+            <button id="delete-warning-window-yes-button" class="sexy-button">Yes</button>
+            <button id="delete-warning-window-no-button" class="sexy-button">No</button>
+        </div>
     </div>
 </body>
 </html>
