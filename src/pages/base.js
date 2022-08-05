@@ -1,7 +1,8 @@
 import Element from '../element.js';
-import { format } from 'date-fns'
+import { format, isThisSecond } from 'date-fns'
 import datescount from '../datescount'
 import editWindow from '../edit-window'
+import {render} from './render';
 
 export default class {
     title = document.getElementById('title');
@@ -16,11 +17,63 @@ export default class {
     datepicker = document.getElementById('datepicker');
     input = this.addButton.querySelector('#state2 input');
     editInput = document.getElementById('topbar-edit-input');
+    deleteWarningWindow = document.getElementById('delete-warning-window');
 
     constructor(db, listDb) {
         this.db = db;
         this.listDb = listDb;
         this.editButton.addEventListener('click', this.editHandle.bind(this))
+        this.deleteButton.addEventListener('click', this.deleteHandle.bind(this))
+    }
+
+    deleteHandle() {
+        let listName = this.sidebar.currentwidnow
+
+        this.db.database = this.db.getData();
+
+        const deleteList = (deleteTasks=false) => {
+
+            if (deleteTasks) {
+                console.log('deleting tasks from db');
+                const newTaskDb = this.db.database.filter(item => item.category !== listName);
+                this.db.database = newTaskDb;
+                this.db.update()
+            }
+            // delete list from db and tasks that have that list
+            this.sidebar.db.database = this.sidebar.db.getData();
+            const newDb = this.sidebar.db.database.filter(item => item.name !== this.sidebar.currentwidnow);
+            this.sidebar.db.database = newDb;
+            this.sidebar.db.update();
+            this.sidebar.showCount();
+            this.sidebar.renderLists();
+            this.sidebar.selectAnimation(document.querySelector('[data-name="tasks"]'))
+            render(this, this.db, 'tasks');
+        }
+
+        
+        // scan through tasks to see if any tasks in in this list
+        // give warning if so give warning
+        const dbCall = this.db.database.filter(item => item.category === this.sidebar.currentwidnow);
+        if (dbCall.length > 0) {
+            this.showWindow(this.deleteWarningWindow);
+            this.deleteWarningWindow.querySelectorAll('button').forEach(i => i.addEventListener('click', handleBtnClicks.bind(this)));
+
+            function handleBtnClicks(e) {
+                if (e.target.id === 'delete-warning-window-yes-button') {
+                    console.log('yes')
+                    deleteList(true)
+                    this.hideWindow(this.deleteWarningWindow);
+                }
+
+                if (e.target.id === 'delete-warning-window-no-button') {
+                    this.hideWindow(this.deleteWarningWindow);
+                }
+            }
+            this.deleteWarningWindow.querySelectorAll('button').forEach(i => i.removeEventListener('click', handleBtnClicks));
+        } else {
+            deleteList();
+        }
+
     }
 
     editHandle() {
@@ -53,6 +106,14 @@ export default class {
             }
             if (e.code === 'Escape') this.stopEdit();
         })
+    }
+
+    showWindow(el) {
+        el.classList.remove('hide');
+    }
+
+    hideWindow(el) {
+        el.classList.add('hide');
     }
 
     stopEdit() {
@@ -97,10 +158,9 @@ export default class {
             input = this.addButton.querySelector('#state2 input');
             dateToPass = this.datepicker.value
             date = datescount(this.datepicker.value);
-            console.log(date);
             inputValue = input.value
-        }
-        const taskId = taskid || this.db.database.length + 1;
+            }
+        const taskId = taskid || this.db.getData().length + 1;
         const wrapper = new Element('div',['task'],'',tasks);
         wrapper.el.dataset.taskid = taskId;
         const taskWrap = new Element('div',['task-wrap'],'', wrapper.el);
@@ -118,9 +178,9 @@ export default class {
 
         const taskWrapBottom = new Element('div',['taskwrapbottom'],'', taskWrap.el);
             let dateIcon = new Element('span',['mdi', 'mdi-calendar'],'', taskWrapBottom.el);
-            let dateElement = new Element('p',[],date, taskWrapBottom.el);
+            let dateElement = new Element('p',[],date.date || date, taskWrapBottom.el);
             let noteIcon = new Element('span',['hide','mdi', 'mdi-note'],'', taskWrapBottom.el);
-            if (date ==='Yesterday') {
+            if (date ==='Yesterday' || date.past) {
                 dateElement.el.style.color = 'hsl(0, 90%,70%)';    
             }
         
@@ -287,6 +347,7 @@ export default class {
     
     importantHandle(e) {
         const eventId = parseInt(e.target.dataset.taskid);
+        this.db.database = this.db.getData();
         const database = this.db.database;
         database.forEach(item => {
             if (parseInt(item.id) === eventId) {

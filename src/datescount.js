@@ -14,6 +14,9 @@ export default function (itemDate) {
         case difference === -1:
             dateString = 'Yesterday';
         break;
+        case difference < -1:
+            dateString = {date: format(dbDate, 'E, dd MMM'), past: true};
+        break;
         case difference <= DaysuntilNewYear:
             dateString = format(dbDate, 'E, dd MMM');
         break;

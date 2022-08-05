@@ -1,6 +1,3 @@
-import tasks from './tasks';
-import important from './important';
-import completed from './completed';
 import {render, getCount} from './render';
 import Element from '../element';
 

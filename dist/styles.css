@@ -401,8 +401,31 @@ input[type="search" i]::-webkit-search-cancel-button {
     background-color: hsla(0, 0%, 15%, .7);
 }
 
+.delete-warning-window {
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
 
-.edit-window {
+.delete-warning-window p {
+    grid-column: 1 / -1;
+}
+
+.delete-window-wrap {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+    z-index: 1000;
+}
+
+.edit-window_base {
     background-color: hsla(0, 0%, 15%, .6);
     top: 0;
     bottom: 0;
@@ -414,19 +437,26 @@ input[type="search" i]::-webkit-search-cancel-button {
     border-radius: 10px;
     margin: auto;
     position: fixed;
+    z-index: 10000;
+    backdrop-filter: blur(5px);
+}
+
+button{
+    cursor: pointer;
+}
+
+.edit-window {
     display: grid;
     gap: 10px;
-    z-index: 10000;
     grid-template-columns: max-content 1fr;
     align-items: center;
     grid-auto-rows: max-content;
-    backdrop-filter: blur(5px);
 }
 
 .edit-window input,
 .edit-window select,
 .edit-window textarea,
-.edit-window button,
+.sexy-button,
 .task-name-wrap {
     padding: .5rem 1rem;
     outline: none;
@@ -456,7 +486,7 @@ input[type="search" i]::-webkit-search-cancel-button {
 
 .edit-window input:hover,
 .edit-window select:hover,
-.edit-window button:hover,
+.sexy-button:hover,
 .edit-window textarea:hover,
 .edit-window .task-name-wrap:hover {
     border-color: hsl(0, 0%, 60%);
@@ -529,7 +559,7 @@ input[type="search" i]::-webkit-search-cancel-button {
 }
 
 .hide {
-    display: none;
+    display: none !important;
 }
 
 
